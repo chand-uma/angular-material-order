@@ -1,0 +1,40 @@
+.material-form {
+  padding: 20px;
+
+  mat-card {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  mat-form-field {
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #666;
+  }
+
+  mat-card-actions {
+    padding: 16px;
+
+    button {
+      margin-left: 8px;
+    }
+  }
+
+  .characteristic-group,
+  .plant-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+}

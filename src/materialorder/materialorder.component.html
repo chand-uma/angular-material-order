@@ -1,0 +1,144 @@
+<form [formGroup]="materialOrderForm" class="material-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Material Order Details</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Material Basic Info -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Material Name</mat-label>
+        <input matInput formControlName="materialName" required>
+        <mat-error *ngIf="materialOrderForm.get('materialName')?.errors?.['required']">
+          Material name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Material Characteristics -->
+      <div formArrayName="characteristics">
+        <h3>Material Characteristics</h3>
+        <div *ngFor="let char of characteristics.controls; let i=index" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>Characteristic Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Value</mat-label>
+            <input matInput formControlName="value">
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removeCharacteristic(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <button mat-button color="primary" (click)="addCharacteristic()">
+          <mat-icon>add</mat-icon> Add Characteristic
+        </button>
+      </div>
+
+      <!-- Inventory Details -->
+      <div formGroupName="inventory">
+        <h3>Inventory Details</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>Current Stock</mat-label>
+          <input matInput type="number" formControlName="currentStock" required>
+          <mat-error *ngIf="materialOrderForm.get('inventory.currentStock')?.errors?.['required']">
+            Current stock is required
+          </mat-error>
+          <mat-error *ngIf="materialOrderForm.get('inventory.currentStock')?.errors?.['min']">
+            Current stock cannot be negative
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Minimum Stock Level</mat-label>
+          <input matInput type="number" formControlName="minStock" required>
+          <mat-error *ngIf="materialOrderForm.get('inventory.minStock')?.errors?.['required']">
+            Minimum stock is required
+          </mat-error>
+          <mat-error *ngIf="materialOrderForm.get('inventory.minStock')?.errors?.['min']">
+            Minimum stock cannot be negative
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Storage Location</mat-label>
+          <input matInput formControlName="location" required>
+          <mat-error *ngIf="materialOrderForm.get('inventory.location')?.errors?.['required']">
+            Storage location is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Plant Details -->
+      <div formArrayName="plants">
+        <h3>Plant Details</h3>
+        <div *ngFor="let plant of plants.controls; let i=index" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>Plant Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Plant Code</mat-label>
+            <input matInput formControlName="code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Required Quantity</mat-label>
+            <input matInput type="number" formControlName="quantity">
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removePlant(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <button mat-button color="primary" (click)="addPlant()">
+          <mat-icon>add</mat-icon> Add Plant
+        </button>
+      </div>
+
+      <!-- Supplier Information -->
+      <div formGroupName="supplier">
+        <h3>Supplier Information</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>Supplier Name</mat-label>
+          <input matInput formControlName="name" required>
+          <mat-error *ngIf="materialOrderForm.get('supplier.name')?.errors?.['required']">
+            Supplier name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Supplier Code</mat-label>
+          <input matInput formControlName="code" required>
+          <mat-error *ngIf="materialOrderForm.get('supplier.code')?.errors?.['required']">
+            Supplier code is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lead Time (Days)</mat-label>
+          <input matInput type="number" formControlName="leadTime" required>
+          <mat-error *ngIf="materialOrderForm.get('supplier.leadTime')?.errors?.['required']">
+            Lead time is required
+          </mat-error>
+          <mat-error *ngIf="materialOrderForm.get('supplier.leadTime')?.errors?.['min']">
+            Lead time must be greater than 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Unit Price</mat-label>
+          <input matInput type="number" formControlName="unitPrice">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button color="warn" type="reset">Reset</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!materialOrderForm.valid">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
